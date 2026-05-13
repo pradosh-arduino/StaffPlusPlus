@@ -1,8 +1,7 @@
 package net.shortninja.staffplus.core.common.utils;
 
 
-import net.shortninja.staffplus.core.common.JavaUtils;
-import org.bukkit.Bukkit;
+import org.bukkit.Material;
 
 public enum Materials {
     SPAWNER("MOB_SPAWNER", "SPAWNER"),
@@ -20,12 +19,9 @@ public enum Materials {
     }
 
     public String getName() {
-        String[] tmp = Bukkit.getVersion().split("MC: ");
-        String version = tmp[tmp.length - 1].substring(0, 4);
-        int ver = JavaUtils.parseMcVer(version);
-        if(ver>=13) {
+        if (Material.matchMaterial(newName) != null) {
             return newName;
-        } else
-            return oldName;
+        }
+        return oldName;
     }
 }
