@@ -10,7 +10,7 @@ modules:
     random-teleport-module:
         enabled: true
         item:
-            type: ENDEREYE
+            type: ENDER_EYE
             name: "&cRandom Teleport"
             lore: "&7Teleports you to a random player."
 
@@ -21,11 +21,11 @@ modules:
     vanish-module:
         enabled: true
         item:
-            type: INK:10
+            type: LIME_DYE
             name: "&6Vanish"
             lore: "&7Toggles your total vanish."
         item-off:
-            type: INK:8
+            type: GRAY_DYE
             name: "&6Vanish"
             lore: "&7Toggles your total vanish."
 
@@ -84,7 +84,7 @@ modules:
     counter-module:
         enabled: true
         item:
-            type: HEAD
+            type: PLAYER_HEAD
             name: "&aStaff List"
             lore: "&7Shows all staff online and in staff mode"
         title: "&bCurrent staff online"

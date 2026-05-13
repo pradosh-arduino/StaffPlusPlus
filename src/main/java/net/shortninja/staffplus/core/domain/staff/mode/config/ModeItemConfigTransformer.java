@@ -14,7 +14,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import static net.shortninja.staffplus.core.application.config.Options.getMaterialData;
-import static net.shortninja.staffplus.core.application.config.Options.sanitizeMaterial;
 import static net.shortninja.staffplus.core.application.config.Options.stringToMaterial;
 
 public class ModeItemConfigTransformer implements IConfigTransformer<ItemStack, Object> {
@@ -25,7 +24,7 @@ public class ModeItemConfigTransformer implements IConfigTransformer<ItemStack, 
         if (configurationSection instanceof LinkedHashMap) {
             LinkedHashMap<String, String> map = (LinkedHashMap<String, String>) configurationSection;
 
-            Material type = stringToMaterial(sanitizeMaterial(map.get("type")));
+            Material type = stringToMaterial(map.get("type"));
             short durability = getMaterialData(map.get("type"));
             String name = map.get("name");
             String commas = map.getOrDefault("lore", "");
@@ -47,7 +46,7 @@ public class ModeItemConfigTransformer implements IConfigTransformer<ItemStack, 
         if (configurationSection instanceof ConfigurationSection) {
             ConfigurationSection map = (ConfigurationSection) configurationSection;
 
-            Material type = stringToMaterial(sanitizeMaterial(map.getString("type")));
+            Material type = stringToMaterial(map.getString("type"));
             short durability = getMaterialData(map.getString("type"));
             String name = map.getString("name");
             String commas = map.getString("lore", "");
