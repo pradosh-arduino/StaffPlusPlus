@@ -29,7 +29,7 @@ public abstract class ModeItemLoader<T extends ModeItemConfiguration> extends Ab
 
         boolean enabled = staffModeModulesConfig.getBoolean(prefix + "enabled", true);
         boolean movable = staffModeModulesConfig.getBoolean(prefix + "movable", true);
-        Material type = stringToMaterial(sanitize(staffModeModulesConfig.getString(prefix + "item")));
+        Material type = stringToMaterial(staffModeModulesConfig.getString(prefix + "item"));
         short durability = getMaterialData(staffModeModulesConfig.getString(prefix + "item"));
         String name = staffModeModulesConfig.getString(prefix + "name");
         String commas = staffModeModulesConfig.getString(prefix + "lore");
