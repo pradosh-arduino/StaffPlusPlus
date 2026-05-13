@@ -259,13 +259,18 @@ public class JavaUtils {
     }
 
     /**
-     * Parses a mc version and returns what the main version is
+     * Parses a mc version and returns the value used to compare API generations.
      *
      * @param ver Version string to be parsed.
-     * @return Second number of the version i.e 13.
+     * @return Second number of legacy versions like 1.13, or the first number of year-based versions like 26.1.
      */
     public static int parseMcVer(String ver) {
-        return Integer.parseInt(ver.split("\\.")[1].replaceAll("[^0-9]", ""));
+        String[] versionParts = ver.split("\\.");
+        int firstVersionPart = Integer.parseInt(versionParts[0].replaceAll("[^0-9]", ""));
+        if (firstVersionPart >= 26) {
+            return firstVersionPart;
+        }
+        return Integer.parseInt(versionParts[1].replaceAll("[^0-9]", ""));
     }
 
     /**

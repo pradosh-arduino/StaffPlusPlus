@@ -50,7 +50,12 @@ public class Options {
 
 
     public static String getMaterial(String current) {
-        switch (current) {
+        String material = sanitizeMaterial(current);
+        if (material.equals("INK") && current.contains(":")) {
+            return getLegacyInkMaterialName(getMaterialData(current));
+        }
+
+        switch (material) {
             case "HEAD":
                 return Materials.valueOf("HEAD").getName();
             case "SPAWNER":
@@ -64,7 +69,7 @@ public class Options {
             case "INK":
                 return Materials.valueOf("INK").getName();
             default:
-                return current;
+                return material;
 
         }
 
@@ -72,12 +77,14 @@ public class Options {
 
     public static Material stringToMaterial(String string) {
         Material sound = Material.STONE;
+        String materialName = getMaterial(string);
+        Material matchedMaterial = Material.matchMaterial(materialName);
 
-        boolean isValid = JavaUtils.isValidEnum(Material.class, getMaterial(string));
-        if (!isValid) {
+        if (matchedMaterial == null) {
             Bukkit.getLogger().severe("Invalid material type '" + string + "'!");
-        } else
-            sound = Material.valueOf(getMaterial(string));
+        } else {
+            sound = matchedMaterial;
+        }
 
         return sound;
     }
@@ -88,6 +95,43 @@ public class Options {
         }
 
         return string.toUpperCase();
+    }
+
+    private static String getLegacyInkMaterialName(short data) {
+        switch (data) {
+            case 1:
+                return "RED_DYE";
+            case 2:
+                return "GREEN_DYE";
+            case 3:
+                return "COCOA_BEANS";
+            case 4:
+                return "LAPIS_LAZULI";
+            case 5:
+                return "PURPLE_DYE";
+            case 6:
+                return "CYAN_DYE";
+            case 7:
+                return "LIGHT_GRAY_DYE";
+            case 8:
+                return "GRAY_DYE";
+            case 9:
+                return "PINK_DYE";
+            case 10:
+                return "LIME_DYE";
+            case 11:
+                return "YELLOW_DYE";
+            case 12:
+                return "LIGHT_BLUE_DYE";
+            case 13:
+                return "MAGENTA_DYE";
+            case 14:
+                return "ORANGE_DYE";
+            case 15:
+                return "BONE_MEAL";
+            default:
+                return Materials.valueOf("INK").getName();
+        }
     }
 
     public static short getMaterialData(String string) {
