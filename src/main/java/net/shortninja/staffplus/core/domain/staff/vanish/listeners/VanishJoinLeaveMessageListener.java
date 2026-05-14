@@ -10,6 +10,7 @@ import net.shortninja.staffplusplus.vanish.VanishOnEvent;
 import net.shortninja.staffplusplus.vanish.VanishType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import static net.shortninja.staffplus.core.common.utils.PlayerNameUtil.getDisplayName;
 
 @IocBukkitListener(conditionalOnProperty = "vanish-module.join-leave-message-enabled=true")
 public class VanishJoinLeaveMessageListener implements Listener {
@@ -30,7 +31,7 @@ public class VanishJoinLeaveMessageListener implements Listener {
     @EventHandler
     public void onVanish(VanishOnEvent event) {
         if (!event.isOnJoin() && (event.getType() == VanishType.LIST || event.getType() == VanishType.TOTAL)) {
-            messages.sendGlobalMessage(vanishLeaveMessage.replace("%player%", event.getPlayer().getName()), "");
+            messages.sendGlobalMessage(vanishLeaveMessage.replace("%player%", getDisplayName(event.getPlayer())), "");
         }
     }
 
@@ -41,7 +42,7 @@ public class VanishJoinLeaveMessageListener implements Listener {
                 .map(JoinMessageGroup::getMessage)
                 .orElse(vanishJoinMessage);
 
-            messages.sendGlobalMessage(joinMessage.replace("%player%", event.getPlayer().getName()), "");
+            messages.sendGlobalMessage(joinMessage.replace("%player%", getDisplayName(event.getPlayer())), "");
         }
     }
 }

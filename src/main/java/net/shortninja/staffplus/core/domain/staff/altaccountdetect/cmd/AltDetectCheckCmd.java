@@ -23,6 +23,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static net.shortninja.staffplus.core.common.cmd.PlayerRetrievalStrategy.BOTH;
+import static net.shortninja.staffplus.core.common.utils.PlayerNameUtil.getDisplayName;
 
 @Command(
     command = "commands:alt-detect-check",
@@ -51,7 +52,7 @@ public class AltDetectCheckCmd extends AbstractCmd {
     @Override
     protected boolean executeCmd(CommandSender sender, String alias, String[] args, SppPlayer player, Map<String, String> optionalParameters) {
         bukkitUtils.runTaskAsync(sender, () -> {
-            messages.send(sender, "&fChecking alt accounts for player: &6%player%".replace("%player%", player.getUsername()), messages.prefixGeneral);
+            messages.send(sender, "&fChecking alt accounts for player: &6%player%".replace("%player%", getDisplayName(player)), messages.prefixGeneral);
             messages.send(sender, "&fLast known IP: &6%ip%".replace("%ip%", playerIpRepository.getLastIp(player.getId()).orElse("Unknown")), messages.prefixGeneral);
             messages.send(sender, messages.LONG_LINE, messages.prefixGeneral);
 

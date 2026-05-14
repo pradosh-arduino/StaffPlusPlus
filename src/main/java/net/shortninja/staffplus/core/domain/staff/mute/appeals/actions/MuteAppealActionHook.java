@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import static java.util.Collections.emptyList;
+import static net.shortninja.staffplus.core.common.utils.PlayerNameUtil.getDisplayName;
 
 @IocBukkitListener
 public class MuteAppealActionHook implements Listener {
@@ -85,9 +86,9 @@ public class MuteAppealActionHook implements Listener {
 
         bukkitUtils.runTaskAsync(() -> {
             Map<String, String> placeholders = new HashMap<>();
-            issuer.ifPresent(sppPlayer -> placeholders.put("%issuer%", sppPlayer.getUsername()));
-            culprit.ifPresent(sppPlayer -> placeholders.put("%target%", sppPlayer.getUsername()));
-            culprit.ifPresent(sppPlayer -> placeholders.put("%culprit%", sppPlayer.getUsername()));
+            issuer.ifPresent(sppPlayer -> placeholders.put("%issuer%", getDisplayName(sppPlayer)));
+            culprit.ifPresent(sppPlayer -> placeholders.put("%target%", getDisplayName(sppPlayer)));
+            culprit.ifPresent(sppPlayer -> placeholders.put("%culprit%", getDisplayName(sppPlayer)));
 
             Map<String, OfflinePlayer> targets = new HashMap<>();
             issuer.ifPresent(sppPlayer -> targets.put("issuer", sppPlayer.getOfflinePlayer()));

@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import static net.shortninja.staffplus.core.common.cmd.PlayerRetrievalStrategy.ONLINE;
+import static net.shortninja.staffplus.core.common.utils.PlayerNameUtil.getDisplayName;
 
 @Command(
     command = "commands:protect-player",
@@ -43,10 +44,10 @@ public class ProtectPlayerCmd extends AbstractCmd {
         playerSession.setProtected(!playerSession.isProtected());
 
         if (playerSession.isProtected()) {
-            messages.send(sender, player.getUsername() + " is now protected from all damage", messages.prefixGeneral);
+            messages.send(sender, getDisplayName(player) + " is now protected from all damage", messages.prefixGeneral);
             messages.send(player.getPlayer(), "You have been protected from all damage by a staff member", messages.prefixGeneral);
         } else {
-            messages.send(sender, player.getUsername() + " is no longer protected from all damage", messages.prefixGeneral);
+            messages.send(sender, getDisplayName(player) + " is no longer protected from all damage", messages.prefixGeneral);
             messages.send(player.getPlayer(), "You are no longer protected from damage", messages.prefixGeneral);
         }
         return true;

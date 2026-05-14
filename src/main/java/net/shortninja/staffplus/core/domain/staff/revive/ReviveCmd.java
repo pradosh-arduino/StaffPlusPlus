@@ -12,10 +12,10 @@ import net.shortninja.staffplus.core.common.cmd.arguments.ArgumentType;
 import net.shortninja.staffplus.core.common.exceptions.BusinessException;
 import net.shortninja.staffplus.core.common.permissions.PermissionHandler;
 import net.shortninja.staffplusplus.session.SppPlayer;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
+
+import static net.shortninja.staffplus.core.common.utils.PlayerNameUtil.getOnlinePlayerDisplayNames;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -83,7 +83,7 @@ public class ReviveCmd extends AbstractCmd {
     @Override
     public List<String> autoComplete(CommandSender sender, String[] args, String[] sppArgs) throws IllegalArgumentException {
         if (args.length == 1) {
-            return Bukkit.getOnlinePlayers().stream().map(HumanEntity::getName).collect(Collectors.toList());
+            return getOnlinePlayerDisplayNames();
         }
 
         return Collections.emptyList();

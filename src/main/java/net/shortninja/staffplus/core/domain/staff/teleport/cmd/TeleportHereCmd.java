@@ -13,10 +13,10 @@ import net.shortninja.staffplus.core.common.exceptions.BusinessException;
 import net.shortninja.staffplus.core.common.permissions.PermissionHandler;
 import net.shortninja.staffplus.core.domain.staff.teleport.TeleportService;
 import net.shortninja.staffplusplus.session.SppPlayer;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
+
+import static net.shortninja.staffplus.core.common.utils.PlayerNameUtil.getOnlinePlayerDisplayNames;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -74,7 +74,7 @@ public class TeleportHereCmd extends AbstractCmd {
     @Override
     public List<String> autoComplete(CommandSender sender, String[] args, String[] sppArgs) throws IllegalArgumentException {
         if (args.length == 1) {
-            List<String> onlinePlayers = Bukkit.getOnlinePlayers().stream().map(HumanEntity::getName).collect(Collectors.toList());
+            List<String> onlinePlayers = getOnlinePlayerDisplayNames();
             return onlinePlayers.stream()
                 .filter(s -> args[0].isEmpty() || s.contains(args[0]))
                 .collect(Collectors.toList());

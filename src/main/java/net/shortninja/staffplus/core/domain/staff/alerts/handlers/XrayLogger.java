@@ -9,6 +9,7 @@ import net.shortninja.staffplusplus.xray.XrayEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import static net.shortninja.staffplus.core.common.utils.PlayerNameUtil.getDisplayName;
 
 @IocBean
 public class XrayLogger {
@@ -25,7 +26,7 @@ public class XrayLogger {
         event.getPickaxe().getEnchantments()
             .forEach((k, v) -> enchantments.add(JavaUtils.formatTypeName(k.getKey().getKey()) + " " + v));
 
-        return getLogMessage(event.getPlayer().getName(),
+        return getLogMessage(getDisplayName(event.getPlayer()),
             event.getAmount(),
             event.getType().name(),
             event.getLightLevel(),

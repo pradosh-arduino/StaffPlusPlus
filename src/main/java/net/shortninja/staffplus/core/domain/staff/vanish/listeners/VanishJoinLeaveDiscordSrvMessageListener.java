@@ -12,32 +12,34 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 
+import static net.shortninja.staffplus.core.common.utils.PlayerNameUtil.getDisplayName;
+
 @IocBean(conditionalOnProperty = "vanish-module.join-leave-message-enabled=true")
 public class VanishJoinLeaveDiscordSrvMessageListener implements Listener {
-    
+
     @ConfigProperty("vanish-module.join-leave-message-enabled")
     private boolean vanishMessagesEnabled;
     @ConfigProperty("%lang%:vanish-join-message")
     private String vanishJoinMessage;
     @ConfigProperty("%lang%:vanish-leave-message")
     private String vanishLeaveMessage;
-    
+
     public VanishJoinLeaveDiscordSrvMessageListener() {
         Plugin discordSrvPlugin = Bukkit.getPluginManager().getPlugin("DiscordSRV");
         if (!(discordSrvPlugin != null && discordSrvPlugin.isEnabled())) {
             return;
         }
-        
+
         StaffPlusPlus.get().getServer().getPluginManager().registerEvents(this, StaffPlusPlus.get());
     }
-    
+
     @EventHandler
     public void onVanish(VanishOnEvent event) {
         if (!vanishMessagesEnabled || event.isOnJoin() || !(event.getType() == VanishType.LIST || event.getType() == VanishType.TOTAL)) {
             return;
         }
-        
-        DiscordSRV.getPlugin().sendLeaveMessage(event.getPlayer(), vanishLeaveMessage.replace("%player%", event.getPlayer().getName()));
+
+        DiscordSRV.getPlugin().sendLeaveMessage(event.getPlayer(), vanishLeaveMessage.replace("%player%", getDisplayName(event.getPlayer())));
     }
 
     @EventHandler
@@ -45,7 +47,7 @@ public class VanishJoinLeaveDiscordSrvMessageListener implements Listener {
         if (!vanishMessagesEnabled || !(event.getType() == VanishType.LIST || event.getType() == VanishType.TOTAL)) {
             return;
         }
-        
-        DiscordSRV.getPlugin().sendJoinMessage(event.getPlayer(), vanishJoinMessage.replace("%player%", event.getPlayer().getName()));
+
+        DiscordSRV.getPlugin().sendJoinMessage(event.getPlayer(), vanishJoinMessage.replace("%player%", getDisplayName(event.getPlayer())));
     }
 }

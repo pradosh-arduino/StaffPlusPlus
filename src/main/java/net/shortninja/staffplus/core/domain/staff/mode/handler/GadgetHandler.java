@@ -24,6 +24,8 @@ import net.shortninja.staffplusplus.session.SppPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import static net.shortninja.staffplus.core.common.utils.PlayerNameUtil.getDisplayName;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
@@ -200,14 +202,14 @@ public class GadgetHandler {
         if (player.getVehicle() != null) {
             player.getVehicle().eject();
         }
-        
+
         targetPlayer.addPassenger(player);
     }
 
     public void executeModule(Player player, Player targetPlayer, CustomModuleConfiguration customModuleConfiguration, Map<String, String> placeholders) {
         List<String> commands = customModuleConfiguration.getActions();
         for (String action : commands) {
-            String command = action.replace("%clicker%", player.getName());
+            String command = action.replace("%clicker%", getDisplayName(player));
             for (Map.Entry<String, String> entry : placeholders.entrySet()) {
                 command = command.replace(entry.getKey(), entry.getValue());
             }

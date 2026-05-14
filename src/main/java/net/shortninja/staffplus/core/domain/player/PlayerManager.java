@@ -10,7 +10,6 @@ import net.shortninja.staffplusplus.session.SppPlayer;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 
 import java.util.Collection;
@@ -20,6 +19,11 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
+import static net.shortninja.staffplus.core.common.utils.PlayerNameUtil.getDisplayName;
+import static net.shortninja.staffplus.core.common.utils.PlayerNameUtil.getNickname;
+import static net.shortninja.staffplus.core.common.utils.PlayerNameUtil.getOnlinePlayerDisplayNames;
+import static net.shortninja.staffplus.core.common.utils.PlayerNameUtil.resolveOnlinePlayer;
 
 @IocBean
 public class PlayerManager {
@@ -53,11 +57,11 @@ public class PlayerManager {
     }
 
     public Optional<SppPlayer> getOnOrOfflinePlayer(String playerName) {
-        Player player = Bukkit.getPlayerExact(playerName);
-        if (player == null) {
+        Optional<Player> player = resolveOnlinePlayer(playerName);
+        if (player.isEmpty()) {
             return offlinePlayerProvider.findUser(playerName);
         }
-        return Optional.of(new SppPlayer(player.getUniqueId(), playerName, player));
+        return Optional.of(new SppPlayer(player.get().getUniqueId(), player.get().getName(), player.get()));
     }
 
     public Set<SppPlayer> getOnAndOfflinePlayers() {
@@ -95,15 +99,17 @@ public class PlayerManager {
     }
 
     public Optional<SppPlayer> getOnlinePlayer(String playerName) {
-        Player player = Bukkit.getPlayer(playerName);
-        if (player == null) {
-            return Optional.empty();
-        }
-        return Optional.of(new SppPlayer(player.getUniqueId(), player.getName(), player));
+        return resolveOnlinePlayer(playerName)
+            .map(player -> new SppPlayer(player.getUniqueId(), player.getName(), player));
     }
 
     public Set<String> getAllPlayerNames() {
-        return new HashSet<>(cachedPlayerNames);
+        Set<String> playerNames = new HashSet<>(cachedPlayerNames);
+        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+            getNickname(onlinePlayer).ifPresent(nickname -> playerNames.remove(onlinePlayer.getName()));
+            playerNames.add(getDisplayName(onlinePlayer));
+        }
+        return playerNames;
     }
 
     public void syncPlayer(Player player) {
@@ -131,7 +137,7 @@ public class PlayerManager {
     }
 
     public List<String> getOnlinePlayerNames() {
-        return Bukkit.getOnlinePlayers().stream().map(HumanEntity::getName).collect(Collectors.toList());
+        return getOnlinePlayerDisplayNames();
     }
 
     public List<SppPlayer> getOnlineSppPlayers() {

@@ -8,6 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import static net.shortninja.staffplus.core.common.utils.PlayerNameUtil.getDisplayName;
 
 @IocBukkitListener
 public class IpsChatNotifier implements Listener {
@@ -24,10 +25,10 @@ public class IpsChatNotifier implements Listener {
     @EventHandler
     public void historyClearedEvent(IpHistoryClearedEvent event) {
         CommandSender issuer = event.getIssuer();
-        messages.send(issuer, messages.ipsHistoryCleared.replace("%player%", event.getTarget().getUsername()), messages.ipsPrefix);
+        messages.send(issuer, messages.ipsHistoryCleared.replace("%player%", getDisplayName(event.getTarget())), messages.ipsPrefix);
         messages.sendGroupMessage(messages.ipsHistoryClearedNotification
             .replace("%issuer%", getIssuerName(event.getIssuer()))
-            .replace("%player%", event.getTarget().getUsername()), staffNotificationPermission, messages.ipsPrefix);
+            .replace("%player%", getDisplayName(event.getTarget())), staffNotificationPermission, messages.ipsPrefix);
     }
 
     private String getIssuerName(CommandSender sender) {

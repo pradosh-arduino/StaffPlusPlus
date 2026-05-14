@@ -9,6 +9,8 @@ import net.shortninja.staffplus.core.domain.staff.mode.custommodules.preprocesso
 import net.shortninja.staffplus.core.domain.staff.mode.custommodules.state.CustomModuleStateMachine;
 import net.shortninja.staffplus.core.domain.staff.mode.handler.GadgetHandler;
 import org.bukkit.entity.Player;
+
+import static net.shortninja.staffplus.core.common.utils.PlayerNameUtil.getDisplayName;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
@@ -44,7 +46,7 @@ public class CustomModuleHandler {
         CustomModuleConfiguration moduleConfiguration = customModuleConfiguration.get();
 
         HashMap<String, String> placeholders = new HashMap<>();
-        placeholders.put("%clicker%", player.getName());
+        placeholders.put("%clicker%", getDisplayName(player));
         Player targetPlayer = JavaUtils.getTargetPlayer(player);
         if (targetPlayer != null) {
             placeholders.put("%clicked%", targetPlayer.getName());
