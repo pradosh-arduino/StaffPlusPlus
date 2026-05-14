@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static net.shortninja.staffplus.core.common.cmd.PlayerRetrievalStrategy.BOTH;
+import static net.shortninja.staffplus.core.common.utils.PlayerNameUtil.getDisplayName;
 
 @Command(
     command = "commands:warns",
@@ -69,7 +70,7 @@ public class WarnsCmd extends AbstractCmd {
         List<Warning> warnings = warnService.getWarnings(player.getId(), true);
 
         for (String message : messages.warningsListStart) {
-            this.messages.send(sender, message.replace("%longline%", this.messages.LONG_LINE).replace("%target%", player.getUsername()).replace("%warnings%", Integer.toString(warnings.size())), message.contains("%longline%") ? "" : messages.prefixWarnings);
+            this.messages.send(sender, message.replace("%longline%", this.messages.LONG_LINE).replace("%target%", getDisplayName(player)).replace("%warnings%", Integer.toString(warnings.size())), message.contains("%longline%") ? "" : messages.prefixWarnings);
         }
 
         for (int i = 0; i < warnings.size(); i++) {
@@ -79,7 +80,7 @@ public class WarnsCmd extends AbstractCmd {
         }
 
         for (String message : messages.warningsListEnd) {
-            this.messages.send(sender, message.replace("%longline%", this.messages.LONG_LINE).replace("%target%", player.getUsername()).replace("%warnings%", Integer.toString(warnings.size())), message.contains("%longline%") ? "" : messages.prefixWarnings);
+            this.messages.send(sender, message.replace("%longline%", this.messages.LONG_LINE).replace("%target%", getDisplayName(player)).replace("%warnings%", Integer.toString(warnings.size())), message.contains("%longline%") ? "" : messages.prefixWarnings);
         }
     }
 

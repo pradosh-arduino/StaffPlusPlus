@@ -17,10 +17,10 @@ import net.shortninja.staffplus.core.domain.staff.kick.KickService;
 import net.shortninja.staffplus.core.domain.staff.kick.config.KickConfiguration;
 import net.shortninja.staffplus.core.domain.staff.kick.config.KickReasonConfiguration;
 import net.shortninja.staffplusplus.session.SppPlayer;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
+
+import static net.shortninja.staffplus.core.common.utils.PlayerNameUtil.getOnlinePlayerDisplayNames;
 
 import java.util.Collections;
 import java.util.List;
@@ -120,7 +120,7 @@ public class KickCmd extends AbstractCmd {
         String currentArg = args.length > 0 ? args[args.length - 1] : "";
 
         if (args.length == 1) {
-            return Bukkit.getOnlinePlayers().stream().map(HumanEntity::getName).collect(Collectors.toList());
+            return getOnlinePlayerDisplayNames();
         }
 
         if (args.length == 2 && !kickReasonConfigurations.isEmpty()) {

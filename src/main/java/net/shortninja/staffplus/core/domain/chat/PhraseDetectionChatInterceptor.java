@@ -14,6 +14,8 @@ import net.shortninja.staffplus.core.domain.chat.configuration.PhraseDetectionGr
 import net.shortninja.staffplusplus.chat.PhrasesDetectedEvent;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+
+import static net.shortninja.staffplus.core.common.utils.PlayerNameUtil.getDisplayName;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import java.util.ArrayList;
@@ -85,7 +87,7 @@ public class PhraseDetectionChatInterceptor implements ChatInterceptor {
         }
         bukkitUtils.runTaskAsync(() -> {
             Map<String, String> placeholders = new HashMap<>();
-            placeholders.put("%player%", player.getName());
+            placeholders.put("%player%", getDisplayName(player));
             placeholders.put("%phrases%", String.join(",", detectedPhrases));
             placeholders.put("%message%", message);
 

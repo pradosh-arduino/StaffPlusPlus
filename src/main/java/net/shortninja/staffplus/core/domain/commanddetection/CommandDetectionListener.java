@@ -11,6 +11,8 @@ import net.shortninja.staffplus.core.domain.actions.config.ConfiguredCommandMapp
 import net.shortninja.staffplusplus.commanddetection.CommandDetectedEvent;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+
+import static net.shortninja.staffplus.core.common.utils.PlayerNameUtil.getDisplayName;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -68,7 +70,7 @@ public class CommandDetectionListener implements Listener {
         }
         bukkitUtils.runTaskAsync(() -> {
             Map<String, String> placeholders = new HashMap<>();
-            placeholders.put("%player%", player.getName());
+            placeholders.put("%player%", getDisplayName(player));
             placeholders.put("%command%", detectedCommand);
 
             Map<String, OfflinePlayer> targets = new HashMap<>();

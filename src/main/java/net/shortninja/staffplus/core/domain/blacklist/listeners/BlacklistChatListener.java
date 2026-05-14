@@ -11,6 +11,8 @@ import net.shortninja.staffplusplus.blacklist.BlacklistCensoredEvent;
 import net.shortninja.staffplusplus.blacklist.BlacklistType;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+
+import static net.shortninja.staffplus.core.common.utils.PlayerNameUtil.getDisplayName;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -69,7 +71,7 @@ public class BlacklistChatListener implements Listener {
             List<Player> staffPlayers = new ArrayList<>(validPlayers);
 
             messages.send(staffPlayers, messages.blacklistChatFormat
-                .replace("%player%", player.getName())
+                .replace("%player%", getDisplayName(player))
                 .replace("%message%", "[tooltip|" + censoredMessage + "|&b" + originalMessage + "]"), "");
         }
     }

@@ -8,6 +8,8 @@ import net.shortninja.staffplus.core.domain.staff.freeze.FreezeGui;
 import net.shortninja.staffplus.core.domain.staff.freeze.config.FreezeConfiguration;
 import net.shortninja.staffplusplus.freeze.PlayerUnFrozenEvent;
 import org.bukkit.entity.Player;
+
+import static net.shortninja.staffplus.core.common.utils.PlayerNameUtil.getDisplayName;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.potion.PotionEffectType;
@@ -29,7 +31,7 @@ public class UnFreezeListener implements Listener {
     public void onUnFreeze(PlayerUnFrozenEvent event) {
         Player player = event.getTarget();
 
-        messages.send(event.getIssuer(), messages.staffUnfroze.replace("%target%", player.getName()), messages.prefixGeneral);
+        messages.send(event.getIssuer(), messages.staffUnfroze.replace("%target%", getDisplayName(player)), messages.prefixGeneral);
         messages.send(player, messages.unfrozen, messages.prefixGeneral);
 
         player.removePotionEffect(PotionEffectType.JUMP_BOOST);

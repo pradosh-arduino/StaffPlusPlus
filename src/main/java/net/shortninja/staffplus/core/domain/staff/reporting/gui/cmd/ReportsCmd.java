@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import static net.shortninja.staffplus.core.common.cmd.PlayerRetrievalStrategy.BOTH;
+import static net.shortninja.staffplus.core.common.utils.PlayerNameUtil.getDisplayName;
 
 @Command(
     command = "commands:reports.manage.cli",
@@ -94,7 +95,7 @@ public class ReportsCmd extends AbstractCmd {
         List<Report> reports = reportService.getReported(player, 0, 40);
 
         for (String message : messages.reportsListStart) {
-            this.messages.send(sender, message.replace("%longline%", this.messages.LONG_LINE).replace("%target%", player.getUsername()).replace("%reports%", Integer.toString(reports.size())), message.contains("%longline%") ? "" : messages.prefixReports);
+            this.messages.send(sender, message.replace("%longline%", this.messages.LONG_LINE).replace("%target%", getDisplayName(player)).replace("%reports%", Integer.toString(reports.size())), message.contains("%longline%") ? "" : messages.prefixReports);
         }
 
         for (int i = 0; i < reports.size(); i++) {
@@ -106,12 +107,12 @@ public class ReportsCmd extends AbstractCmd {
         }
 
         messages.reportsListEnd
-            .forEach(message -> this.messages.send(sender, message.replace("%longline%", this.messages.LONG_LINE).replace("%target%", player.getUsername()).replace("%reports%", Integer.toString(reports.size())), message.contains("%longline%") ? "" : messages.prefixReports));
+            .forEach(message -> this.messages.send(sender, message.replace("%longline%", this.messages.LONG_LINE).replace("%target%", getDisplayName(player)).replace("%reports%", Integer.toString(reports.size())), message.contains("%longline%") ? "" : messages.prefixReports));
     }
 
     private void clearReports(CommandSender sender, SppPlayer player) {
         manageReportService.clearReports(player);
-        messages.send(sender, messages.reportsCleared.replace("%culprit%", player.getUsername()), messages.prefixReports);
+        messages.send(sender, messages.reportsCleared.replace("%culprit%", getDisplayName(player)), messages.prefixReports);
     }
 
     private void sendHelp(CommandSender sender) {

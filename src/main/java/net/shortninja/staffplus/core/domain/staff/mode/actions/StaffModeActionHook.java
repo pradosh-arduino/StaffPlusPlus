@@ -24,6 +24,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static java.util.Collections.emptyList;
+import static net.shortninja.staffplus.core.common.utils.PlayerNameUtil.getDisplayName;
 
 @IocBukkitListener
 public class StaffModeActionHook implements Listener {
@@ -80,7 +81,7 @@ public class StaffModeActionHook implements Listener {
         }
         bukkitUtils.runTaskAsync(() -> {
             Map<String, String> placeholders = new HashMap<>();
-            placeholders.put("%staff%", staff.getUsername());
+            placeholders.put("%staff%", getDisplayName(staff));
 
             Map<String, OfflinePlayer> targets = new HashMap<>();
             targets.put("staff", staff.getOfflinePlayer());

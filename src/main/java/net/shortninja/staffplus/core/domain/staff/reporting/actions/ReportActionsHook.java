@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import static net.shortninja.staffplus.core.common.utils.PlayerNameUtil.getDisplayName;
 
 @IocBukkitListener
 public class ReportActionsHook implements Listener {
@@ -77,9 +78,9 @@ public class ReportActionsHook implements Listener {
             Optional<SppPlayer> culprit = report.getCulpritUuid() != null ? playerManager.getOnOrOfflinePlayer(report.getCulpritUuid()) : Optional.empty();
 
             Map<String, String> placeholders = new HashMap<>();
-            reporter.ifPresent(sppPlayer -> placeholders.put("%reporter%", sppPlayer.getUsername()));
-            assigned.ifPresent(sppPlayer -> placeholders.put("%assigned%", sppPlayer.getUsername()));
-            culprit.ifPresent(sppPlayer -> placeholders.put("%culprit%", sppPlayer.getUsername()));
+            reporter.ifPresent(sppPlayer -> placeholders.put("%reporter%", getDisplayName(sppPlayer)));
+            assigned.ifPresent(sppPlayer -> placeholders.put("%assigned%", getDisplayName(sppPlayer)));
+            culprit.ifPresent(sppPlayer -> placeholders.put("%culprit%", getDisplayName(sppPlayer)));
 
             Map<String, OfflinePlayer> targets = new HashMap<>();
             reporter.ifPresent(sppPlayer -> targets.put("reporter", sppPlayer.getOfflinePlayer()));
