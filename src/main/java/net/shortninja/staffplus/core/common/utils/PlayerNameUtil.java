@@ -3,6 +3,7 @@ package net.shortninja.staffplus.core.common.utils;
 import net.shortninja.staffplusplus.session.SppPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -27,11 +28,15 @@ public final class PlayerNameUtil {
             return Optional.of(target);
         }
 
-        return Bukkit.getOnlinePlayers().stream()
-            .filter(player -> getNickname(player)
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            if (getNickname(player)
                 .map(nickname -> nickname.equalsIgnoreCase(input))
-                .orElse(false))
-            .findFirst();
+                .orElse(false)) {
+                return Optional.of(player);
+            }
+        }
+
+        return Optional.empty();
     }
 
     public static String getDisplayName(Player player) {
@@ -49,6 +54,19 @@ public final class PlayerNameUtil {
             return getDisplayName(player.getPlayer());
         }
         return player.getUsername();
+    }
+
+    public static String getDisplayName(OfflinePlayer player) {
+        if (player == null) {
+            return null;
+        }
+
+        Player onlinePlayer = Bukkit.getPlayer(player.getUniqueId());
+        if (onlinePlayer != null) {
+            return getDisplayName(onlinePlayer);
+        }
+
+        return player.getName();
     }
 
     public static List<String> getOnlinePlayerDisplayNames() {
