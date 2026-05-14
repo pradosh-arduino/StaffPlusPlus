@@ -5,6 +5,8 @@ import net.shortninja.staffplus.core.application.config.messages.Messages;
 import net.shortninja.staffplus.core.common.JavaUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import static net.shortninja.staffplus.core.common.utils.PlayerNameUtil.getDisplayName;
 import org.bukkit.inventory.ItemStack;
 
 @IocBean
@@ -21,7 +23,7 @@ public class StripService {
     public void strip(CommandSender sender,  Player player) {
         strip(player, 0);
 
-        messages.send(sender, messages.strip.replace("%player%", player.getName()), messages.prefixGeneral);
+        messages.send(sender, messages.strip.replace("%player%", getDisplayName(player)), messages.prefixGeneral);
     }
 
     private void strip(Player player, int index) {

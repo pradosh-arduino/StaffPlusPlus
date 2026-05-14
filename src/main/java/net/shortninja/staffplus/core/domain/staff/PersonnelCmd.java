@@ -18,6 +18,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import static net.shortninja.staffplus.core.common.utils.PlayerNameUtil.getDisplayName;
+
 import java.util.Map;
 import java.util.Optional;
 
@@ -60,7 +62,7 @@ public class PersonnelCmd extends AbstractCmd {
         for (Player player : Bukkit.getOnlinePlayers()) {
             OnlinePlayerSession session = sessionManager.get(player);
             if (hasStatus(session, status, player)) {
-                messages.send(sender, messages.staffListMember.replace("%player%", player.getName()).replace("%statuscolor%", getStatusColor(session, player)), messages.prefixGeneral);
+                messages.send(sender, messages.staffListMember.replace("%player%", getDisplayName(player)).replace("%statuscolor%", getStatusColor(session, player)), messages.prefixGeneral);
             }
         }
 

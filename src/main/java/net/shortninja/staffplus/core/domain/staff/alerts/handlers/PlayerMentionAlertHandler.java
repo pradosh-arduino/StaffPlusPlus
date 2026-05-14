@@ -15,6 +15,8 @@ import net.shortninja.staffplusplus.alerts.AlertType;
 import net.shortninja.staffplusplus.chat.PlayerMentionedEvent;
 import net.shortninja.staffplusplus.session.SppPlayer;
 import org.bukkit.entity.Player;
+
+import static net.shortninja.staffplus.core.common.utils.PlayerNameUtil.getDisplayName;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -40,7 +42,7 @@ public class PlayerMentionAlertHandler extends AlertsHandler implements Listener
 
     @EventHandler
     public void handle(PlayerMentionedEvent event) {
-        notifyMentionedPlayer(event.getMentionedPlayer().getUniqueId(), event.getPlayer().getName(), options.serverName);
+        notifyMentionedPlayer(event.getMentionedPlayer().getUniqueId(), getDisplayName(event.getPlayer()), options.serverName);
     }
 
     @EventHandler

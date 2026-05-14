@@ -5,9 +5,10 @@ import be.garagepoort.mcioc.IocMultiProvider;
 import net.shortninja.staffplus.core.common.cmd.arguments.ArgumentExecutor;
 import net.shortninja.staffplus.core.common.cmd.arguments.ArgumentType;
 import net.shortninja.staffplus.core.domain.player.StripService;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import static net.shortninja.staffplus.core.common.utils.PlayerNameUtil.resolveOnlinePlayer;
 
 import java.util.Collections;
 import java.util.List;
@@ -24,7 +25,7 @@ public class StripArgumentExecutor implements ArgumentExecutor {
 
     @Override
     public boolean execute(CommandSender commandSender, String playerName, String value) {
-        Player player = Bukkit.getPlayerExact(playerName);
+        Player player = resolveOnlinePlayer(playerName).orElse(null);
         if (player == null) {
             return false;
         }

@@ -14,6 +14,8 @@ import net.shortninja.staffplus.core.domain.staff.mode.StaffModeService;
 import net.shortninja.staffplus.core.domain.staff.tracing.TraceService;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+
+import static net.shortninja.staffplus.core.common.utils.PlayerNameUtil.getDisplayName;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -65,7 +67,7 @@ public class PlayerQuit implements Listener {
 
         if (session.isFrozen()) {
             for (String command : freezeConfiguration.logoutCommands) {
-                command = command.replace("%player%", player.getName());
+                command = command.replace("%player%", getDisplayName(player));
                 Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
             }
             freezeHandler.removeFreeze(Bukkit.getConsoleSender(), player);
@@ -76,7 +78,7 @@ public class PlayerQuit implements Listener {
         xrayService.clearTrace(player);
 
         if (session.isFrozen()) {
-            messages.sendGroupMessage(messages.freezeLogout.replace("%player%", player.getName()), permissionFreeze, messages.prefixGeneral);
+            messages.sendGroupMessage(messages.freezeLogout.replace("%player%", getDisplayName(player)), permissionFreeze, messages.prefixGeneral);
         }
 
         if (session.isInStaffMode() && session.getModeConfig().get().isModeDisableOnLogout()) {

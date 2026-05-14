@@ -10,10 +10,10 @@ import net.shortninja.staffplus.core.common.cmd.CommandService;
 import net.shortninja.staffplus.core.common.cmd.SppCommand;
 import net.shortninja.staffplus.core.common.permissions.PermissionHandler;
 import net.shortninja.staffplusplus.session.SppPlayer;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
+
+import static net.shortninja.staffplus.core.common.utils.PlayerNameUtil.getOnlinePlayerDisplayNames;
 
 import java.util.Collections;
 import java.util.List;
@@ -100,7 +100,7 @@ public class TraceCmd extends AbstractCmd {
         }
 
         if (args.length == 2) {
-            List<String> onlinePLayers = Bukkit.getOnlinePlayers().stream().map(HumanEntity::getName).collect(Collectors.toList());
+            List<String> onlinePLayers = getOnlinePlayerDisplayNames();
             return onlinePLayers.stream()
                 .filter(s -> args[1].isEmpty() || s.contains(args[1]))
                 .collect(Collectors.toList());

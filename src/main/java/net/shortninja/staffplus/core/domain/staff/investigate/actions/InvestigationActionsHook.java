@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import static java.util.Collections.singletonList;
+import static net.shortninja.staffplus.core.common.utils.PlayerNameUtil.getDisplayName;
 
 @IocBukkitListener
 public class InvestigationActionsHook implements Listener {
@@ -76,8 +77,8 @@ public class InvestigationActionsHook implements Listener {
         bukkitUtils.runTaskAsync(() -> {
             if (investigator.isPresent()) {
                 Map<String, String> placeholders = new HashMap<>();
-                investigator.ifPresent(sppPlayer -> placeholders.put("%investigator%", sppPlayer.getUsername()));
-                investigated.ifPresent(sppPlayer -> placeholders.put("%investigated%", sppPlayer.getUsername()));
+                investigator.ifPresent(sppPlayer -> placeholders.put("%investigator%", getDisplayName(sppPlayer)));
+                investigated.ifPresent(sppPlayer -> placeholders.put("%investigated%", getDisplayName(sppPlayer)));
 
                 Map<String, OfflinePlayer> targets = new HashMap<>();
                 investigator.ifPresent(sppPlayer -> targets.put("investigator", sppPlayer.getOfflinePlayer()));

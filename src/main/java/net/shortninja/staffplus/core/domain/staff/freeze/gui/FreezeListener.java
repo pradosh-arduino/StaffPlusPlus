@@ -6,6 +6,8 @@ import net.shortninja.staffplus.core.domain.staff.freeze.FreezeGui;
 import net.shortninja.staffplus.core.domain.staff.freeze.config.FreezeConfiguration;
 import net.shortninja.staffplusplus.freeze.PlayerFrozenEvent;
 import org.bukkit.entity.Player;
+
+import static net.shortninja.staffplus.core.common.utils.PlayerNameUtil.getDisplayName;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.potion.PotionEffect;
@@ -35,7 +37,7 @@ public class FreezeListener implements Listener {
             player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, Integer.MAX_VALUE, 128));
         }
 
-        messages.send(event.getIssuer(), messages.staffFroze.replace("%target%", player.getName()), messages.prefixGeneral);
+        messages.send(event.getIssuer(), messages.staffFroze.replace("%target%", getDisplayName(player)), messages.prefixGeneral);
 
         player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, Integer.MAX_VALUE, 128));
         player.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, Integer.MAX_VALUE, 128));
